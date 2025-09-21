@@ -1,0 +1,27 @@
+{
+  "short_name": "StreamBase",
+  "name": "StreamBase - Seu Guia de Filmes e Séries",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "logo192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "logo512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#0d1117",
+  "background_color": "#0d1117",
+  "description": "Encontre informações detalhadas, notas e pôsteres de seus filmes e séries favoritas com o StreamBase, seu catálogo interativo de cinema."
+}
