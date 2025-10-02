@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   HiOutlineArrowRightOnRectangle,
   HiOutlineStar,
@@ -15,30 +15,9 @@ import {
 } from "react-icons/hi2";
 
 const MobileSidebar = ({ isOpen, onClose, user, onLogout }) => {
-  const navigate = useNavigate();
-  const location = useLocation();
-
   const handleLogout = async () => {
     onClose();
     await onLogout();
-
-    const protectedRoutes = [
-      "/profile",
-      "/favorites",
-      "/watchlist",
-      "/activity-feed",
-      "/notifications",
-      "/create-list",
-      "/lists",
-      "/list",
-      "/foryou",
-    ];
-    const isProtectedRoute = protectedRoutes.some((route) =>
-      location.pathname.startsWith(route)
-    );
-    if (isProtectedRoute) {
-      navigate("/");
-    }
   };
 
   const handleLinkClick = () => {

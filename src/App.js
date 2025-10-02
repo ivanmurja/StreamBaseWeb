@@ -21,12 +21,16 @@ import ListPage from "./pages/ListPage";
 import DiscoverUsersPage from "./pages/DiscoverUsersPage";
 import ForYouPage from "./pages/ForYouPage";
 import PullToRefresh from "./components/PullToRefresh";
+import MobileSidebar from "./components/MobileSidebar";
+import { useAuth } from "./context/AuthContext";
 
 import "./styles.css";
 
 const AppLayout = () => {
+  const { user, logout } = useAuth();
   const [query, setQuery] = useState("");
   const [isFilterSidebarOpen, setFilterSidebarOpen] = useState(false);
+  const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [genres, setGenres] = useState([]);
   const [filters, setFilters] = useState({
     sortBy: "popularity.desc",
@@ -59,10 +63,19 @@ const AppLayout = () => {
         onFilterChange={handleFilterChange}
         genres={genres}
       />
+      {user && (
+        <MobileSidebar
+          isOpen={isSidebarOpen}
+          onClose={() => setSidebarOpen(false)}
+          user={user}
+          onLogout={logout}
+        />
+      )}
       <PullToRefresh>
         <div className="min-h-screen font-sans text-brand-text bg-brand-dark flex flex-col">
           <Header
             onFilterToggle={() => setFilterSidebarOpen(!isFilterSidebarOpen)}
+            onSidebarToggle={() => setSidebarOpen(!isSidebarOpen)}
           />
           <main className="flex-grow">
             <Outlet

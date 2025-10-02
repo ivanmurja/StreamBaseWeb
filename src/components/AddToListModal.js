@@ -3,6 +3,7 @@ import { useAuth } from "../context/AuthContext";
 import { HiOutlineXMark } from "react-icons/hi2";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase/config";
+import Modal from "./Modal";
 
 const AddToListModal = ({ mediaData, onClose }) => {
   const { user, getUserLists, addMediaToList } = useAuth();
@@ -60,52 +61,44 @@ const AddToListModal = ({ mediaData, onClose }) => {
   };
 
   return (
-    <div
-      className="fixed inset-0 bg-black/70 z-50 flex justify-center items-center"
-      onClick={onClose}
-    >
-      <div
-        className="bg-brand-light-dark rounded-lg shadow-xl w-full max-w-md m-4"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="p-6 border-b border-brand-border flex justify-between items-center">
-          <h3 className="text-xl font-bold text-white">Adicionar à Lista</h3>
-          <button onClick={onClose} className="text-gray-400 hover:text-white">
-            <HiOutlineXMark className="h-6 w-6" />
-          </button>
-        </div>
-        <div className="p-6 max-h-80 overflow-y-auto">
-          {loading && (
-            <p className="text-center text-brand-text-secondary">
-              Carregando listas...
-            </p>
-          )}
-          {!loading && lists.length === 0 && (
-            <p className="text-center text-brand-text-secondary">
-              Você ainda não tem listas.{" "}
-              <a href="/create-list" className="text-brand-primary underline">
-                Crie uma agora!
-              </a>
-            </p>
-          )}
-          {feedback && (
-            <p className="text-center text-green-400 mb-4">{feedback}</p>
-          )}
-          <div className="space-y-2">
-            {lists.map((list) => (
-              <button
-                key={list.id}
-                onClick={() => handleAddToList(list.id)}
-                disabled={!!feedback}
-                className="w-full text-left p-3 rounded-md bg-brand-dark hover:bg-brand-border transition-colors text-white disabled:opacity-50"
-              >
-                {list.name}
-              </button>
-            ))}
-          </div>
+    <Modal onClose={onClose}>
+      <div className="p-6 border-b border-brand-border flex justify-between items-center">
+        <h3 className="text-xl font-bold text-white">Adicionar à Lista</h3>
+        <button onClick={onClose} className="text-gray-400 hover:text-white">
+          <HiOutlineXMark className="h-6 w-6" />
+        </button>
+      </div>
+      <div className="p-6 max-h-80 overflow-y-auto">
+        {loading && (
+          <p className="text-center text-brand-text-secondary">
+            Carregando listas...
+          </p>
+        )}
+        {!loading && lists.length === 0 && (
+          <p className="text-center text-brand-text-secondary">
+            Você ainda não tem listas.{" "}
+            <a href="/create-list" className="text-brand-primary underline">
+              Crie uma agora!
+            </a>
+          </p>
+        )}
+        {feedback && (
+          <p className="text-center text-green-400 mb-4">{feedback}</p>
+        )}
+        <div className="space-y-2">
+          {lists.map((list) => (
+            <button
+              key={list.id}
+              onClick={() => handleAddToList(list.id)}
+              disabled={!!feedback}
+              className="w-full text-left p-3 rounded-md bg-brand-dark hover:bg-brand-border transition-colors text-white disabled:opacity-50"
+            >
+              {list.name}
+            </button>
+          ))}
         </div>
       </div>
-    </div>
+    </Modal>
   );
 };
 

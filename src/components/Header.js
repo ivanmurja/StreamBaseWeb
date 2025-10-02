@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import MobileSidebar from "./MobileSidebar";
 import NotificationDropdown from "./NotificationDropdown";
 import {
   HiOutlineUserCircle,
@@ -16,8 +15,7 @@ import {
   HiOutlineSparkles,
 } from "react-icons/hi2";
 
-const Header = ({ onFilterToggle }) => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+const Header = ({ onFilterToggle, onSidebarToggle }) => {
   const [isNotificationsDropdownOpen, setIsNotificationsDropdownOpen] =
     useState(false);
   const { user, logout, unreadNotificationsCount } = useAuth();
@@ -29,13 +27,6 @@ const Header = ({ onFilterToggle }) => {
   const toggleButtonRef = useRef(null);
   const profileMenuRef = useRef(null);
   const profileToggleButtonRef = useRef(null);
-
-  useEffect(() => {
-    document.body.style.overflow = isSidebarOpen ? "hidden" : "unset";
-    return () => {
-      document.body.style.overflow = "unset";
-    };
-  }, [isSidebarOpen]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -301,7 +292,7 @@ const Header = ({ onFilterToggle }) => {
                     )}
                   </div>
                   <button
-                    onClick={() => setIsSidebarOpen(true)}
+                    onClick={onSidebarToggle}
                     className="p-2 text-gray-400 hover:text-brand-primary"
                     title="Menu"
                   >
@@ -313,15 +304,6 @@ const Header = ({ onFilterToggle }) => {
           </div>
         </div>
       </header>
-
-      {user && (
-        <MobileSidebar
-          isOpen={isSidebarOpen}
-          onClose={() => setIsSidebarOpen(false)}
-          user={user}
-          onLogout={handleLogout}
-        />
-      )}
     </>
   );
 };
